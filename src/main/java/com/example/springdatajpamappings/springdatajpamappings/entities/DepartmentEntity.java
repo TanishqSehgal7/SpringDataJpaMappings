@@ -19,4 +19,9 @@ public class DepartmentEntity {
     @Column(nullable = false)
     private String title;
 
+
+    @OneToOne
+    @JoinColumn(name = "departments_manager")
+    private EmployeeEntity manager;
+
 }

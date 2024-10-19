@@ -2,7 +2,9 @@ package com.example.springdatajpamappings.springdatajpamappings.services;
 
 import com.example.springdatajpamappings.springdatajpamappings.entities.EmployeeEntity;
 import com.example.springdatajpamappings.springdatajpamappings.repositories.EmployeeRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EmployeeService {
 
     EmployeeRepository employeeRepository;
