@@ -1,11 +1,14 @@
 package com.example.springdatajpamappings.springdatajpamappings.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+import java.util.Objects;
+import java.util.Set;
+
+@Setter
+@Getter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,9 +22,22 @@ public class DepartmentEntity {
     @Column(nullable = false)
     private String title;
 
-
     @OneToOne
-    @JoinColumn(name = "departments_manager")
+    @JoinColumn(name = "department_manager")
     private EmployeeEntity manager;
 
+    @OneToMany(mappedBy = "employeeDepartment", fetch = FetchType.EAGER)
+    private Set<EmployeeEntity> employeesInTheDepartment;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DepartmentEntity that)) return false;
+        return getId().equals(that.getId()) && getTitle().equals(that.getTitle());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getTitle());
+    }
 }
