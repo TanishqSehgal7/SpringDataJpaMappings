@@ -29,6 +29,11 @@ public class DepartmentEntity {
     @OneToMany(mappedBy = "employeeDepartment", fetch = FetchType.EAGER)
     private Set<EmployeeEntity> employeesInTheDepartment;
 
+
+    @ManyToMany(mappedBy = "freelanceDepartments")
+    private Set<EmployeeEntity> freelancers;
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

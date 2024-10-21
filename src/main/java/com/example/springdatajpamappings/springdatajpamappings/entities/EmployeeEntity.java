@@ -35,6 +35,13 @@ public class EmployeeEntity {
     @JsonIgnore
     private DepartmentEntity employeeDepartment;
 
+    @ManyToMany
+    @JoinTable(name = "freelance_departments_mapping",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "department_id"))
+    @JsonIgnore
+    private Set<DepartmentEntity> freelanceDepartments;
+
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getName());
