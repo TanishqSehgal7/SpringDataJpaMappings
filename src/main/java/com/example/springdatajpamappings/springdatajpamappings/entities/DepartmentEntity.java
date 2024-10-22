@@ -1,9 +1,7 @@
 package com.example.springdatajpamappings.springdatajpamappings.entities;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.Objects;
 import java.util.Set;
 
@@ -29,10 +27,8 @@ public class DepartmentEntity {
     @OneToMany(mappedBy = "employeeDepartment", fetch = FetchType.EAGER)
     private Set<EmployeeEntity> employeesInTheDepartment;
 
-
     @ManyToMany(mappedBy = "freelanceDepartments")
     private Set<EmployeeEntity> freelancers;
-
 
     @Override
     public boolean equals(Object o) {
@@ -45,4 +41,5 @@ public class DepartmentEntity {
     public int hashCode() {
         return Objects.hash(getId(), getTitle());
     }
+
 }
