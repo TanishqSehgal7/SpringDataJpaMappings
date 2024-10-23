@@ -18,4 +18,5 @@ public class ProfessorService {
     public Professor createNewProfessor(Professor professor) {
         return professorRepository.save(professor);
     }
+
 }

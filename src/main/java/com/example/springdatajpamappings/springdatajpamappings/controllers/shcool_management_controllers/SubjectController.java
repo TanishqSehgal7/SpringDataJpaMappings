@@ -15,7 +15,7 @@ public class SubjectController {
     }
 
     @GetMapping("/{studentId}")
-    public Subject getSubjectById(Long subjectId) {
+    public Subject getSubjectById(@PathVariable Long subjectId) {
         return subjectService.getSubjectById(subjectId);
     }
 
