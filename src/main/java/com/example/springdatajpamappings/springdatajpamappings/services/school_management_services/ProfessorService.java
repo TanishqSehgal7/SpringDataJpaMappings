@@ -2,7 +2,9 @@ package com.example.springdatajpamappings.springdatajpamappings.services.school_
 
 import com.example.springdatajpamappings.springdatajpamappings.entities.school_management_entities.Professor;
 import com.example.springdatajpamappings.springdatajpamappings.repositories.school_management_repositories.ProfessorRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProfessorService {
 
     ProfessorRepository professorRepository;
