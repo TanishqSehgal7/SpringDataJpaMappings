@@ -8,6 +8,7 @@ import com.example.springdatajpamappings.springdatajpamappings.repositories.scho
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,35 +29,34 @@ public class ProfessorService {
 
     public Professor createNewProfessorForExistingSubject(ProfessorSubjectDto professorSubjectDto) {
 
+        // Check if professor exists
         Optional<Professor> existingProfessor = professorRepository.findByProfessorName(professorSubjectDto.getProfessorName());
+
+        // Fetch subjects by their IDs
         List<Subject> subjectList = subjectRepository.findAllById(professorSubjectDto.getSubjectIds());
 
-        if(existingProfessor.isPresent()) {
-            Professor foundProfessor = existingProfessor.get();
-            for(Subject subject: subjectList) {
-                for(Long id : professorSubjectDto.getSubjectIds()) {
-                    if(subjectRepository.existsById(id)) {
-                        subject.setProfessor(foundProfessor);
-//                        foundProfessor.getSubjects().add(subject);
-                    }
-                }
-            }
-            professorRepository.save(foundProfessor);
-            return foundProfessor;
+        Professor professor;
+
+        if (existingProfessor.isPresent()) {
+            // Use the existing professor
+            professor = existingProfessor.get();
         } else {
-            Professor professor = new Professor();
+            // Create a new professor
+            professor = new Professor();
             professor.setProfessorName(professorSubjectDto.getProfessorName());
-            for(Subject subject: subjectList) {
-                for(Long id : professorSubjectDto.getSubjectIds()) {
-                    if(subjectRepository.existsById(id)) {
-                        subject.setProfessor(professor);
-//                        professor.getSubjects().add(subject);
-                    }
-                }
-            }
-            professorRepository.save(professor);
-            return professor;
+            professor.setSubjects(new ArrayList<>()); // Ensure subjects list is initialized
         }
+
+        // Assign subjects to the professor
+        for (Subject subject : subjectList) {
+            if (subject.getProfessor() == null) { // Ensure the subject is not already assigned
+                subject.setProfessor(professor);
+                professor.getSubjects().add(subject);
+            }
+        }
+
+        // Save the professor with the updated subjects
+        return professorRepository.save(professor);
     }
 
 }

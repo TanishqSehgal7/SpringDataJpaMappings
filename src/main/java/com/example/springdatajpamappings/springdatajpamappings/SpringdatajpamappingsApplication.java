@@ -9,5 +9,4 @@ public class SpringdatajpamappingsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringdatajpamappingsApplication.class, args);
 	}
-
 }

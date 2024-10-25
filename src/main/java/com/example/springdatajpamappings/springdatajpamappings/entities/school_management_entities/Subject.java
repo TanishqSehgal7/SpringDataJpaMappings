@@ -29,6 +29,7 @@ public class Subject {
     private Professor professor;
 
     @ManyToMany(mappedBy = "studentSubjects", fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Student> studentList;
 
 }

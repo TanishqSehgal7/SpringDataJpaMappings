@@ -4,6 +4,8 @@ import com.example.springdatajpamappings.springdatajpamappings.entities.school_m
 import com.example.springdatajpamappings.springdatajpamappings.services.school_management_services.SubjectService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/subjects")
 public class SubjectController {
@@ -20,8 +22,13 @@ public class SubjectController {
     }
 
     @PostMapping
-    public Subject createNewSubject(@RequestBody Subject subject) {
+    public List<Subject> createNewSubject(@RequestBody Subject subject) {
         return subjectService.createNewSubject(subject);
+    }
+
+    @PutMapping(path = "/{subjectId}/students/{studentId}")
+    public Subject assignStudentsToSubjects(@PathVariable Long subjectId, @PathVariable Long studentId) {
+        return subjectService.assignStudentsToSubjects(subjectId, studentId);
     }
 
 }
