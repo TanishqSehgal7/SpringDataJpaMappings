@@ -6,7 +6,6 @@ import com.example.springdatajpamappings.springdatajpamappings.repositories.scho
 import com.example.springdatajpamappings.springdatajpamappings.repositories.school_management_repositories.SubjectRepository;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -51,6 +50,7 @@ public class SubjectService {
                     subject1.getStudentList().add(student1);
                     subjectRepository.save(subject1);
                     student1.getStudentSubjects().add(subject1);
+                    studentRepository.save(student1);
                     return subject1;
                 })).orElse(null);
 

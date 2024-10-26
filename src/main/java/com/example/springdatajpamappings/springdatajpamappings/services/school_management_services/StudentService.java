@@ -51,18 +51,43 @@ public class StudentService {
         return existingStudent.orElse(null);
     }
 
-    public Professor assignStudentToProfessor(Long professorId, Long studentId) {
+//    public Professor assignStudentToProfessor(Long professorId, Long studentId) {
+//
+//        Optional<Professor> professor = professorRepository.findById(professorId);
+//        Optional<Student> student = studentRepository.findById(studentId);
+//
+////        return professor.flatMap(professor1 ->
+////                student.map(student1 -> {
+////                    professor1.getStudents().add(student1);
+////                    professorRepository.save(professor1);
+////                    student1.getProfessors().add(professor1);
+////                    return professor1;
+////                })).orElse(null);
+//
+//        return student.flatMap(student1 ->
+//                professor.map(professor1 -> {
+//                    student1.getProfessors().add(professor1);
+//                    studentRepository.save(student1);
+//                    professor1.getStudents().add(student1);
+//                    professorRepository.save(professor1);
+//                    return professor1;
+//                })).orElse(null);
+//    }
 
-        Optional<Professor> professor = professorRepository.findById(professorId);
+    public Student assignStudentToProfessor(Long studentId, Long professorId) {
+
         Optional<Student> student = studentRepository.findById(studentId);
+        Optional<Professor> professor = professorRepository.findById(professorId);
 
-        return professor.flatMap(professor1 ->
-                student.map(student1 -> {
+        return student.flatMap(student1->
+                professor.map(professor1 -> {
+                    student1.getProfessors().add(professor1);
+                    studentRepository.save(student1);
                     professor1.getStudents().add(student1);
                     professorRepository.save(professor1);
-                    student1.getProfessors().add(professor1);
-                    return professor1;
+                    return student1;
                 })).orElse(null);
+
     }
 
 }

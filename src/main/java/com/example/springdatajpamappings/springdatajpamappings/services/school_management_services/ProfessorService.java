@@ -4,10 +4,11 @@ import com.example.springdatajpamappings.springdatajpamappings.dto.ProfessorSubj
 import com.example.springdatajpamappings.springdatajpamappings.entities.school_management_entities.Professor;
 import com.example.springdatajpamappings.springdatajpamappings.entities.school_management_entities.Subject;
 import com.example.springdatajpamappings.springdatajpamappings.repositories.school_management_repositories.ProfessorRepository;
+import com.example.springdatajpamappings.springdatajpamappings.repositories.school_management_repositories.StudentRepository;
 import com.example.springdatajpamappings.springdatajpamappings.repositories.school_management_repositories.SubjectRepository;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,10 +18,12 @@ public class ProfessorService {
 
     ProfessorRepository professorRepository;
     SubjectRepository subjectRepository;
+    StudentRepository studentRepository;
 
-    public ProfessorService(ProfessorRepository professorRepository, SubjectRepository subjectRepository) {
+    public ProfessorService(ProfessorRepository professorRepository, SubjectRepository subjectRepository, StudentRepository studentRepository) {
         this.professorRepository = professorRepository;
         this.subjectRepository = subjectRepository;
+        this.studentRepository = studentRepository;
     }
 
     public Professor getProfessorById(Long professorId) {
@@ -58,5 +61,4 @@ public class ProfessorService {
         // Save the professor with the updated subjects
         return professorRepository.save(professor);
     }
-
 }

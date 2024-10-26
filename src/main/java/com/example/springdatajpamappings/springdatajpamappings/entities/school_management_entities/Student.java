@@ -21,13 +21,13 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne(mappedBy = "studentAdmissionRecord", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "studentAdmissionRecord", fetch = FetchType.LAZY)
     @JsonIgnore
     private AdmissionRecord admissionRecord;
 
     private String studentName;
 
-    @ManyToMany(mappedBy = "students", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY)
     List<Professor> professors;
 
     @ManyToMany
