@@ -21,8 +21,8 @@ public class BookController {
     }
 
     @PostMapping
-    public Book createNewBookWithAuthor(@RequestBody Book book) {
-        return bookService.createNewBookWithAuthor(book);
+    public Book createNewBook(@RequestBody Book book) {
+        return bookService.createNewBook(book);
     }
 
 }

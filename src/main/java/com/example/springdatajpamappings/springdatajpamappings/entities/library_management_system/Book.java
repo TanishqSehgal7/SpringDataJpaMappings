@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -28,6 +29,6 @@ public class Book {
     inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Author authorOfTheBooks;
 
-    private LocalDateTime publishedDate;
+    private LocalDate publishedDate;
 
 }

@@ -17,14 +17,13 @@ public class BookService {
         this.authorRepository = authorRepository;
     }
 
-    public Book createNewBookWithAuthor(Book book) {
+    public Book createNewBook(Book book) {
 
-        Optional<Book> existingBook = bookRepository.findById(book.getId());
-
-        if (!existingBook.isPresent()) {
+//        Optional<Book> existingBook = bookRepository.findById(book.getId());
+//        if (!existingBook.isPresent()) {
             return bookRepository.save(book);
-        } else {
-            return null;
-        }
+//        } else {
+//            return null;
+//        }
     }
 }
