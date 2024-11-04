@@ -5,6 +5,7 @@ import com.example.springdatajpamappings.springdatajpamappings.repositories.libr
 import com.example.springdatajpamappings.springdatajpamappings.repositories.library_management_system.BookRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,5 +26,13 @@ public class AuthorService {
         } else {
             return null;
         }
+    }
+
+    public List<Author> getAllAuthors() {
+        return authorRepository.findAll();
+    }
+
+    public Author getAuthorById(Long authorId) {
+        return authorRepository.findById(authorId).orElse(null);
     }
 }

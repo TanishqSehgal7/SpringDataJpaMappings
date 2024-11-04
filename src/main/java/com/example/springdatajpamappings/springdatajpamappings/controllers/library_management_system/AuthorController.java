@@ -5,10 +5,9 @@ import com.example.springdatajpamappings.springdatajpamappings.repositories.libr
 import com.example.springdatajpamappings.springdatajpamappings.repositories.library_management_system.BookRepository;
 import com.example.springdatajpamappings.springdatajpamappings.services.library_management_system.AuthorService;
 import com.example.springdatajpamappings.springdatajpamappings.services.library_management_system.BookService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/authors")
@@ -25,6 +24,16 @@ public class AuthorController {
     @PostMapping
     public Author createAuthor(@RequestBody Author author) {
         return authorService.createAuthor(author);
+    }
+
+    @GetMapping
+    public List<Author> getAllAuthors() {
+        return authorService.getAllAuthors();
+    }
+
+    @GetMapping(path = "{authorId}")
+    public Author getAuthorById(@PathVariable Long authorId){
+        return authorService.getAuthorById(authorId);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.springdatajpamappings.springdatajpamappings.entities.library_management_system;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,10 +24,9 @@ public class Book {
 
     private String bookName;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "book_author_mapping",
-    joinColumns = @JoinColumn(name = "book_id"),
-    inverseJoinColumns = @JoinColumn(name = "author_id"))
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id")
+    @JsonIgnore
     private Author authorOfTheBooks;
 
     private LocalDate publishedDate;

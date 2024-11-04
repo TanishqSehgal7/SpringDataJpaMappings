@@ -1,12 +1,13 @@
 package com.example.springdatajpamappings.springdatajpamappings.controllers.library_management_system;
 
+import com.example.springdatajpamappings.springdatajpamappings.dto.BookAuthorDto;
 import com.example.springdatajpamappings.springdatajpamappings.entities.library_management_system.Book;
 import com.example.springdatajpamappings.springdatajpamappings.services.library_management_system.AuthorService;
 import com.example.springdatajpamappings.springdatajpamappings.services.library_management_system.BookService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/books")
@@ -21,8 +22,23 @@ public class BookController {
     }
 
     @PostMapping
-    public Book createNewBook(@RequestBody Book book) {
-        return bookService.createNewBook(book);
+    public Book createNewBookWithAuthor(@RequestBody BookAuthorDto bookAuthorDto) {
+        return bookService.createNewBookWithAuthor(bookAuthorDto);
+    }
+
+    @GetMapping
+    public List<Book> getAllBooks() {
+        return bookService.getAllBooks();
+    }
+
+    @GetMapping(path = "/{bookId}")
+    public Book getBookById(@PathVariable Long bookId) {
+        return bookService.getBookById(bookId);
+    }
+
+    @GetMapping(path = "/{bookName}")
+    public Book findByBookName(@PathVariable String bookName) {
+        return bookService.findByBookName(bookName);
     }
 
 }

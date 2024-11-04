@@ -1,12 +1,16 @@
 package com.example.springdatajpamappings.springdatajpamappings.entities.library_management_system;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -22,7 +26,8 @@ public class Author {
 
     private String authorName;
 
-    @OneToMany(mappedBy = "authorOfTheBooks", fetch = FetchType.EAGER)
-    private List<Book> books;
+    @OneToMany(mappedBy = "authorOfTheBooks", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Book> books = new HashSet<>();
 
 }
