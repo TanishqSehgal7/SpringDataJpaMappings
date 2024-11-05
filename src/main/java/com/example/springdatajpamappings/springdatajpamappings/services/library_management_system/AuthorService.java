@@ -35,4 +35,8 @@ public class AuthorService {
     public Author getAuthorById(Long authorId) {
         return authorRepository.findById(authorId).orElse(null);
     }
+
+    public Author findAuthorByName(String authorName) {
+        return authorRepository.findByAuthorName(authorName).orElse(null);
+    }
 }

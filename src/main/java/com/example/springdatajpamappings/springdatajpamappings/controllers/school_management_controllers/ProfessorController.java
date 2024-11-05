@@ -1,4 +1,4 @@
-package com.example.springdatajpamappings.springdatajpamappings.controllers.shcool_management_controllers;
+package com.example.springdatajpamappings.springdatajpamappings.controllers.school_management_controllers;
 
 import com.example.springdatajpamappings.springdatajpamappings.dto.ProfessorSubjectDto;
 import com.example.springdatajpamappings.springdatajpamappings.entities.school_management_entities.Professor;

@@ -8,8 +8,11 @@ import com.example.springdatajpamappings.springdatajpamappings.repositories.libr
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -65,5 +68,28 @@ public class BookService {
 
     public Book findByBookName(String bookName) {
         return bookRepository.findByBookName(bookName).orElse(null);
+    }
+
+    public List<Book> findBooksAfterCertainPublishedDate(String date) {
+
+        LocalDate localDate = LocalDate.parse(date);
+        List<Book> booksAfterCertainPublishedDate = bookRepository.findByPublishedDateAfter(localDate).orElse(null).stream().collect(Collectors.toList());
+
+        return booksAfterCertainPublishedDate;
+    }
+
+    public List<Book> findAllBooksBySpecificAuthor(String authorName) {
+
+        Optional<Author> authorByName = authorRepository.findByAuthorName(authorName);
+        Long authorId = 0L;
+
+        if(authorByName.isPresent()) {
+            authorId = authorByName.get().getId();
+            System.out.println("Author Id is: " + authorId);
+            List<Book> allBooksByAuthor = bookRepository.findByAuthorOfTheBooks_Id(authorId);
+            return allBooksByAuthor;
+        } else {
+            return Collections.emptyList();
+        }
     }
 }

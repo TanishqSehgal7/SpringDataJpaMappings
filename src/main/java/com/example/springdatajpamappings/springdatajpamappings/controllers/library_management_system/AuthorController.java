@@ -31,9 +31,14 @@ public class AuthorController {
         return authorService.getAllAuthors();
     }
 
-    @GetMapping(path = "{authorId}")
+    @GetMapping(path = "/{authorId}")
     public Author getAuthorById(@PathVariable Long authorId){
         return authorService.getAuthorById(authorId);
+    }
+
+    @GetMapping(path = "/authorName")
+    public Author getAuthorByName(@RequestParam(required = true, name = "authorName") String authorName) {
+        return authorService.findAuthorByName(authorName);
     }
 
 }
