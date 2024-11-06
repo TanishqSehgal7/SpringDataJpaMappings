@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -58,4 +59,13 @@ public class BookController {
         return bookService.deleteBookById(id);
     }
 
+    @PatchMapping(path = "/{bookId}")
+    public Book updateBookPartialBookDetails(@RequestBody Map<String, Object> updates, @PathVariable Long bookId) {
+        Book updatedBook = bookService.updateBookPartialBookDetails(updates, bookId);
+        if(updatedBook!=null) {
+            return updatedBook;
+        } else {
+            return null;
+        }
+    }
 }

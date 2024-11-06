@@ -5,13 +5,14 @@ import com.example.springdatajpamappings.springdatajpamappings.entities.library_
 import com.example.springdatajpamappings.springdatajpamappings.entities.library_management_system.Book;
 import com.example.springdatajpamappings.springdatajpamappings.repositories.library_management_system.AuthorRepository;
 import com.example.springdatajpamappings.springdatajpamappings.repositories.library_management_system.BookRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.util.ReflectionUtils;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.time.format.DateTimeParseException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -102,5 +103,38 @@ public class BookService {
         } else {
             return false;
         }
+    }
+
+    public Book updateBookPartialBookDetails(Map<String, Object> updates, Long bookId) {
+
+        Optional<Book> isBookExistingById = bookRepository.findById(bookId);
+
+        Book book = isBookExistingById.get();
+        if(isBookExistingById.isPresent()) {
+            updates.forEach((field,value) -> {
+                Field fieldToUpdate = ReflectionUtils.findRequiredField(Book.class, field);
+
+                if(fieldToUpdate!=null) {
+                    fieldToUpdate.setAccessible(true);
+
+                    if(fieldToUpdate.getType().equals(LocalDate.class) && value instanceof String) {
+                        try {
+                            LocalDate parsedDate = LocalDate.parse((String) value);
+                            ReflectionUtils.setField(fieldToUpdate, book, parsedDate);
+                        } catch (DateTimeParseException e) {
+                            throw new IllegalArgumentException("Invalid date format for field: " + field);
+                        }
+                    } else {
+                        ReflectionUtils.setField(fieldToUpdate, book, value);
+                    }
+                    fieldToUpdate.setAccessible(false);
+                } else {
+                    throw new IllegalArgumentException("Field " + field + " does not exist on Book class");
+                }
+            });
+        } else {
+            throw new EntityNotFoundException("Book with ID " + bookId + " not found");
+        }
+        return bookRepository.save(book);
     }
 }
