@@ -92,4 +92,15 @@ public class BookService {
             return Collections.emptyList();
         }
     }
+
+    public boolean deleteBookById(Long id) {
+        Optional<Book> isExistingBook = bookRepository.findById(id);
+
+        if(isExistingBook.isPresent()) {
+            bookRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

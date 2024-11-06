@@ -53,4 +53,9 @@ public class BookController {
         return bookService.findAllBooksBySpecificAuthor(authorName);
     }
 
+    @DeleteMapping(path = "/{id}")
+    public boolean deleteBookById(@PathVariable Long id) {
+        return bookService.deleteBookById(id);
+    }
+
 }
