@@ -108,8 +108,8 @@ public class BookService {
     public Book updateBookPartialBookDetails(Map<String, Object> updates, Long bookId) {
 
         Optional<Book> isBookExistingById = bookRepository.findById(bookId);
-
         Book book = isBookExistingById.get();
+
         if(isBookExistingById.isPresent()) {
             updates.forEach((field,value) -> {
                 Field fieldToUpdate = ReflectionUtils.findRequiredField(Book.class, field);
@@ -117,7 +117,10 @@ public class BookService {
                 if(fieldToUpdate!=null) {
                     fieldToUpdate.setAccessible(true);
 
-                    if(fieldToUpdate.getType().equals(LocalDate.class) && value instanceof String) {
+                    if("authorOfTheBooks".equals(field) && value instanceof Map) {
+                        Map<String, Object> authorData = (Map<String, Object>) value;
+                        updateAuthor(book, authorData);
+                    } else if(fieldToUpdate.getType().equals(LocalDate.class) && value instanceof String) {
                         try {
                             LocalDate parsedDate = LocalDate.parse((String) value);
                             ReflectionUtils.setField(fieldToUpdate, book, parsedDate);
@@ -136,5 +139,23 @@ public class BookService {
             throw new EntityNotFoundException("Book with ID " + bookId + " not found");
         }
         return bookRepository.save(book);
+    }
+
+    private void updateAuthor(Book book, Map<String, Object> authorData) {
+
+        Long authorId = authorData.get("id") !=null? Long.valueOf(authorData.get("id").toString()) : null;
+        Author author;
+        if(authorId!=null) {
+            author = authorRepository.findById(authorId)
+                    .orElseThrow(() -> new EntityNotFoundException("Author with ID: " + authorId + " does not exist."));
+        } else {
+            author = new Author();
+        }
+
+        if(authorData.containsKey("authorName")) {
+            author.setAuthorName(authorData.get("authorName").toString());
+        }
+
+        book.setAuthorOfTheBooks(author);
     }
 }
